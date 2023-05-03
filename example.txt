@@ -1,0 +1,288 @@
+1 General Setup
+
+The latest available, approved version of Firefox ESR must be installed.
+Every seventh version of Firefox is declared an Extended Support Release (ESR). Latest ESR version is Firefox 102. These versions get serious bugs fixed in minor versions (updates) for 54 weeks. There is an overlap of 12 weeks between two successive ESR releases. Installing the latest available minor release of Firefox 102 ESR minimizes the chance to use web browser with critical vulnerabilities.   	
+Deviations or add-ons must be disabled. Should an administrator require changes, the SA may contact us by email securitysettings@ncirc.<INTERNATIONAL ORGANISATION>.int, for guidance.
+	
+1.1 Security Settings
+Firefox on RHEL security settings are enforced with the use of a json file, we have initially named policies.json. You may use your preferred method to specify system-wide policy by placing the file in /etc/firefox/policies.
+The following settings refer to the preferences and values contained in the policies.json. 
+1.1.1 FirefoxHome
+Default:	New tabs contain Snippets and pocket recommendations.
+Required setting: 	"Search": true, "TopSites":true, ”SponsoredTopSites”:true, “SponsoredPocket”: true, “Snippets”:true, “Highlights”:true, “Pockets”:true, "Locked": true 
+Rationale:	This setting controls Firefox behavior when opening new tab. This page should not contain “Snippets” and recommended by “Pocket” and user should not be able to change it. 
+1.1.2 BlockAboutAddons
+Default:	Addons Manager available to user
+Required setting: 	"BlockAboutAddons": true
+Rationale:	Firefox Add-ons may modify the default behavior of the web browser, potentially bypassing limits and constraints the GPOs are trying to enforce. Therefore, add-ons shall be unavailable to end users and centrally managed by the system administrators. 
+1.1.3 DontCheckDefaultBrowser
+Default:                         Default browser is checked.        
+Required setting:          "DontCheckDefaultBrowser": true         
+Rationale:                      The default browser should not be checked, an alternate browser may be preferred.                   
+1.1.4 DisableDeveloperTools
+Default:	Developer tools available from menu.
+Required setting: 	"DisableDeveloperTools": true
+Rationale:	Developer tools shall only be available to developers. This policy removed access to all developer tools.
+1.1.5 DisableFeedbackCommands
+Default:	feedback to Mozilla is enabled.
+Required setting: 	"DisableFeedbackCommands": true
+Rationale:	Mozilla Firefox browser used in <INTERNATIONAL ORGANISATION> CIS shall not send any browser health data to external entities.
+1.1.6 DisableFirefoxAccounts
+Default:	firefox accounts available.
+Required setting: 	"DisableFirefoxAccounts": true
+Rationale:	Users shall not have access to the Firefox sync icon, which requests users register with Firefox.
+1.1.7 DisableFirefoxStudies
+Default:	Mozilla features available.
+Required setting: 	"DisableFirefoxstudies": true
+Rationale:	Firefox studies let users try out different Mozilla features and ideas before release to all Firefox users. In a <INTERNATIONAL ORGANISATION> environment, only approved software versions and features shall be authorized for use.
+1.1.8 DisableFormHistory (OPTIONAL for isolated networks)
+Default:	FormHistory is cached.
+Required setting: 	"DisableFormHistory": true
+Rationale:	<INTERNATIONAL ORGANISATION> systems classified as <INTERNATIONAL ORGANISATION> RESTRICTED, can be connected to the internet and data stored for restricted web sites will be exposed to the internet sites. To avoid such a situation, web forms content must not be cached in the browser.
+1.1.9 DisableMasterPasswordCreation
+Default:	MasterPasswordCreation enabled.
+Required setting: 	"DisableMasterPasswordCreation": true
+Rationale:	This setting prevents potential issues regarding forensics activities that may have to be conducted on the target machines. In addition, saving password features are disabled in <INTERNATIONAL ORGANISATION> environments.
+1.1.10 DisablePasswordReveal  
+Default:                         Passwords visible.
+Required:                      "DisablePasswordReveal": true
+Rationale:                      Browser logins are not saved on <INTERNATIONAL ORGANISATION> infrastructure, this policy prevents password reveal as an extra layer of security.
+1.1.11 DisablePocket
+Default:	Pocket recommendations available.
+Required setting: 	"DisablePocket": true
+Rationale:	<INTERNATIONAL ORGANISATION> systems classified as <INTERNATIONAL ORGANISATION> RESTRICTED may be connected to the internet and data stored in the Firefox Pocket will be exposed in the cloud. To avoid such situation, Firefox Pocket is disabled on <INTERNATIONAL ORGANISATION>.
+1.1.12 DisablePrivateBrowsing
+Default:                         Private browsing enabled.                      
+Required setting:          "DisablePrivateBrowsing": true
+Rationale:                     Private browsing could prevent tracking of a user’s browsing activity. At the same time it could give the user a false sense of security.
+1.1.13 DisableTelemetry
+Default:	Browser information forwarded.
+Required setting: 	"DisableTelemetry": true
+Rationale:	Mozilla Firefox browser used in <INTERNATIONAL ORGANISATION> CIS shall not send any browser telemetry to external entities.
+1.1.14 DisableAppUpdate
+Default:	Firefox automatically updates.
+Required setting: 	DisableAppUpdate": true
+Rationale:	Mozilla Firefox browser shall be regularly updated by the administrators. Update process shall be planed, tested and approved prior deployment. Allowing users to install updates for Firefox browser may lead to situation where buggy or misconfigured products are used within <INTERNATIONAL ORGANISATION> CIS infrastructure.
+
+1.1.15 NetworkPrediction
+Default:	Prefetching to Cloudfare enabled.
+Required setting: 	"NetworkPrediction": false
+Rationale:	This setting controls DNS prefetching. Network prefetching may lead to uncontrolled traffic from potentially unsafe systems. 
+1.1.16 OfferToSaveLogins
+Default:	Passwords saved.
+Required setting: 	“OfferToSaveLogins": false
+Rationale:	<INTERNATIONAL ORGANISATION> users should secure their passwords, especially when using classified systems. Password leakage from the browser may be avoided if the user does not rely on the mechanisms used in the internet browsers and provides the passwords every time when the systems require it.
+                                     Note: New behavior updated from “Offer to save logons (default)” of “not configured”: user preference to save password is not enabled.
+1.1.17 OverrideFirstRunPage
+Default:	First Run page shown
+Required setting: 	“OverrideFirstRunPage”: “”
+Rationale:	Mozilla Firefox browser shall not try to connect to any website in the Internet without the direct intent of its user. Additionally, Firefox browser deployed in separated environment such as NS or MS shall not try to connect to the Internet for user’s convenience.
+1.1.18 OverridePostUpdatePage
+Default:	Mozilla able to connect to websites without user consent.
+Required setting: 	“OverridePostUpdatePage”: “”
+Rationale:	Mozilla Firefox browser shall not try to connect to any website in the Internet without the direct intent of its user. Additionally, Firefox browser deployed in separated environment such as NS or MS shall not try to connect to the Internet for user’s convenience. In addition, updates must be centrally managed and maintained by the system administrators.
+1.1.19 SSLVersionMin
+Default:	minimum version 1.0.
+Required setting: 	“SSLVersionMin": "tls1.2"
+Rationale:	The allowed minimum encryption protocols determines the possible encryption types that can be used. Preventing the use of older protocols increases security. Firefox has disabled TLS 1.0 and TLS 1.1 
+1.1.20 Proxy
+Default:	Not Configured.
+Required setting: 	“Locked”: true, “Mode”: system, “SOCKSVersion”:5 
+	Note: Due to a bug, you must select a value for the SOCKS (SOCKS v5) 
+Rationale:	Since Firefox is considered as a secondary browser it should use system settings for a proxy already set for a primary browser. Administrators are required to change this setting to align with the network infrastructure for as long as “Don’t allow proxy settings to be changed” option is selected which prevents users to change proxy settings.
+1.2 Addons
+1.2.1 DisableSystemAddonUpdate
+Default:	Addons set to update automatically.
+Required setting: 	"DisableSystemAddonUpdate": true 
+Rationale:	This setting prevents add-ons from being installed to Firefox.
+1.3 Authentication
+1.3.1 Authentication
+Default:	Not Configured.
+Required setting: 	"Authentication": {"NTLM": ["<INTERNATIONAL ORGANISATION>.int"]}
+Rationale:	This allows the browser to use native NTLM authentication on <INTERNATIONAL ORGANISATION> websites only.
+1.4 Certificates
+1.4.1 Certificates | Install  
+Default:	N/A	
+Required setting:          Install NPKi certificates into the Firefox certificate store. If only a filename is specified, Firefox searches for the file in the following locations:
+* /usr/lib/Mozilla/certificates
+* /usr/lib64/Mozilla/certificates
+* ~/.mozilla/certificates
+                                     Since Firefox 60.5 ESR, a fully qualified path may be used, including UNC paths. You should use the native path style for your operating system. NPKi certificates are to be installed using the trust string CT,CT,.
+                                     Binary(DER) and ASCII(PEM) certificates are both supported.
+The supplied policies.json file also requires editing, under;
+“Certificates”: {“Install”: [ “NPKIROOTCAV3.der”,” NCIANUNRCAV3.pem”]}, 
+Proceed to replace “NPKIROOTCAV3.der” and “NCIANUNRCAV3.pem” with the name of your NPKi supplied certificates.
+Rationale:                    There bug that prevents using the operating system certificate store.
+1.5 SanitizeOnShutdown (Selective)
+1.5.1 Form & Search History
+Default:	Data saved on shutdown.
+Required setting: 	"SanitizeOnShutdown": {"FormData": true, “Locked”: true}
+Rationale:	 In order to protect sensitive data, Firefox provides the ability to configure such that data entered into forms is not saved.
+1.6 Cookies
+1.6.1 Behavior
+Default:	standard setting.
+Required setting: 	"Behavior": "reject-tracker-and-partition-foreign"
+Rationale:	Third party cookies are the cookies set by the website other that user has visited (via embedded objects). Based on that, cookies from third party companies can track user behavior in the network collecting the info about visited sites. 
+1.6.2 Cookie behavior in private browsing 
+Default:	Not Configured.
+Required setting: 	"behaviorPrivateBrowsing": "reject-tracker-and-partition-foreign"
+Rationale:	Tracking cookies are distributed and retrieved across multiple Web site domains allowing Web sites to monitor visitors' surfing habits. Some cookies can contain personal information or are bound to user profiles. With this settings Firefox will reject tracker cookies by default. 
+1.6.3 Do not allow preferences to be changed
+Default:	N/A.
+Required setting: 	"Locked": true
+Rationale:	This prevents the user from changing cookie preferences. 
+
+1.7 DNSOverHTTPS
+1.7.1 Enabled
+Default:                         Enabled.
+Required setting:          DNSOverHTTPS": {"Enabled": false}
+Rationale:                     <INTERNATIONAL ORGANISATION> does not send DNS requests to Cloudfare or NextDNS.
+1.7.2 Locked
+Default:                         Not locked.
+Required setting:          "Locked": true
+Rationale:                 <INTERNATIONAL ORGANISATION> infrastructure is not setup for this new setting. This policy setting prevents users changing DNS over HTTPS setting.
+1.8 EncryptedMediaExtensions
+1.8.1 Enabled
+Default:                         Enabled.
+Required setting:          "EncryptedMediaExtensions": {"Enabled": false}
+Rationale:                      Only extensions evaluated by <INTERNATIONAL ORGANISATION> must be installed. This policy prevents encrypted media extensions (like Widevine) from being installed.
+1.8.2 Locked 
+Default:                        Not locked.
+Required setting:         "EncryptedMediaExtensions": {"Locked": true}
+Rationale:                    Enabling this setting with Enable Encrypted Media Extensions disabled, prevents Firefox downloading encrypted media extensions or asking the user to install them.                                                  
+1.9 Extensions
+1.9.1 ExtensionSettings
+Default:	Extensions available.
+Required setting: 	"ExtensionSettings": {"*": {"blocked_install_message": "Custom error message.", "installation_mode": "blocked"}
+Rationale:	If this setting is Disabled no Extensions are installed. 
+1.10 ExtensionUpdate
+Default:                         Updates automatic.
+Required setting:          "ExtensionUpdate": false
+Rationale:                     In the event external extensions are required, then the system administrator will need to approve them. This setting will prevent automatic extension updates.
+1.11 Home Page
+1.11.1 Homepage
+Default:	Firefox Home (Default)
+Required setting: 	"Homepage": {"URL": "about:blank","Locked": true}
+Rationale:	Mozilla Firefox browser shall not try to connect to any website on the Internet without the direct intent of its user. Therefore, by default, Firefox web browser should start with a blank page as home page. 
+1.11.2 Start Page
+Default:	firefox homepage (default).
+Required setting: 	"StartPage": "homepage-locked"
+Rationale:	This setting defines what is displayed when Firefox starts. Mozilla Firefox browser shall not try to connect to any website in the Internet without the direct intent of its user.
+1.12 PDFjs
+1.12.1 Enabled
+Default:                         PDF option available.
+Required setting:          "PDFjs": {"Enabled": false, "EnablePermissions": false}
+Rationale:                     Built-in PDF viewers do not offer the same level of functionality and/or security than the 3rd party viewer. Specifically, since <ISECURITY DEPARTMENT> is providing Security Hardening guide for Acrobat Reader, using built-in PDF viewer would bypass the Acrobat Reader enforced settings.              
+1.13 Permissions / Camera
+1.13.1 Block new requests asking to access the camera
+Default:	websites able to request permission.
+Required setting: 	"Camera": {"BlockNewRequests": true}
+Rationale:	In order to prevent data leak issues and potential compromising of the browser camera by rogue websites using a zero-day exploit to take control over the camera. 
+1.13.2 Do not allow preferences to be changed
+Default:	not locked.
+Required setting: 	"Camera": {"Locked": true}
+Rationale:	This prevents the user from changing the Firefox camera settings. 
+
+1.14 Permissions / Location
+1.14.1 Block new requests asking to access location
+Default:	websites able to request permission.
+Required setting: 	"Location": {"BlockNewRequests": true}
+Rationale:	Web sites can request location of the user (browser) to adapt their behavior to the standard user requirements from this location, e.g. set the display language to the official country language, redirect the user to the company’s local web site, etc.… This information could also be used to track the user and create user’s profile based on his/her travel pattern. As it is automatic process user does not have opportunity to opt-out of such tracking and therefore is should be disabled. 
+1.14.2 Do not allow preferences to be changed
+Default:	not locked.
+Required setting: 	"Location": {"Locked": true}
+Rationale:	This prevents the user from changing the Firefox location settings. 
+
+1.15 Permissions / Microphone 
+1.15.1 Block new requests asking to access microphone
+Default:	websites able to request permission.
+Required setting: 	"Microphone": {"BlockNewRequests": true}        
+Rationale:	In order to prevent data leak issues and potential compromising of the browser camera by rogue websites using a zero-day exploit to take control over the microphone. 
+1.15.2 Do not allow preferences to be changed
+Default:	not locked.
+Required setting: 	"Microphone": {"Locked": true}
+Rationale:	This prevents the user from changing the Firefox microphone settings.
+1.16 Permissions / Notifications
+1.16.1 Block new requests asking to access notifications
+Default:	websites able to request permission.
+Required setting: 	"Notifications": {"BlockNewRequests": true}        
+Rationale:	In order to prevent data leak issues and potential social engineering. 
+1.16.2 Do not allow preferences to be changed
+Default:	Not locked.
+Required setting: 	"Notifications": {"Locked": true}        
+Rationale:	This prevents the user from changing the Firefox notifications settings.
+1.17 Permissions / Autoplay
+1.17.1 Block new requests asking to access Autoplay
+Default:	websites able to request permission.
+Required setting: 	“BlockNewRequests”:{BlockNewRequests”:true}
+Rationale:	In order to prevent audio and video playing without user consent.
+1.17.2 Do not allow preferences to be changed
+Default:	Not locked.
+Required setting: 	“BlockNewRequests”:{“Locked”:true}
+Rationale:	This prevents the user from changing the Firefox auto play settings.
+
+1.18 Popups
+1.18.1 PopupBlocking
+Default:	Popups blocked.
+Required setting: 	"PopupBlocking": {"Default": true, “Locked:true}
+Rationale:	Pop-up windows if opened in large number can make the system unusable because of the performance issues or user impact. This preference prevents the user from changing the Firefox Pop-ups settings.
+1.19 Preferences
+1.19.1 Extension recommendations must be disabled
+Default:                         recommendations enabled
+Required setting:          "extensions.htmlaboutaddons.recommendations.enabled":  false
+Rationale:                  The Recommended Extensions program will make it easier for users to discover extensions that have been reviewed for security and user experience.
+1.19.2 Firefox is configured to ask which certificate to present to a website when a certificate is required
+Default:	Ask Every time.
+Required setting: 	security.default_personal_cert : “Ask Every Time”.
+Rationale:	Websites within <INTERNATIONAL ORGANISATION> require user authentication for access, which            increases security.
+1.19.3 Disable automatic update of Search plug-ins 
+Default:	true.
+Required setting: 	browser.search.update :false
+Rationale:	Update of the software in the <INTERNATIONAL ORGANISATION> environment must be fully controlled by CIS staff and therefore automatic update should be allowed only from the approved repositories, not directly from the internet. If false, updates for search engines are not checked.
+1.19.4 Disable browser windows manipulation by scripts
+Default:	Scripts run in Firefox can manipulate browser window
+Required setting: 	Scripts are not allowed to manipulate browser windows features.
+	dom.disable_window_move_resize :true
+	dom.disable_window_filp :true
+Rationale:	Manipulation of the browser windows properties may be activity of the malware on the OS. Malicious code can use minimizing of an active window to hide its activity, opening new windows in the background, changing the display bar text to pretend different content of the page, etc.
+1.19.5 Disable customization of context menu by JavaScript
+Default:	Context menu customization is enabled.
+Required setting: 	JavaScript embedded in the web page are not allowed to manipulate context menu.
+                                     dom.event.contextmenu.enabled :false
+Rationale:	Context menu offers a limited set of choices that are available in the current state of the application or operating system. JavaScript embedded in the webpage and executed during the browsing can make changes to the context menu and with that method can disguise as attack.
+1.19.6 Disable interpreting Unicode characters in address bar
+Default:	Unicode characters in the address bar are interpreted by Firefox and the international version of text is displayed.
+Required setting: 	User must see real page name in the address bar.
+                                     network.IDN_show_punycode :false
+Rationale:	Punycode is a special encoding used to convert Unicode characters to ASCII that allows to encode internationalized domain names (IDN). It allows to register domain names using only ASCII characters for non-Latin letters (Cyrillic, Chinese alphabet, etc.), such as theoretical domain of Munich city: www.xn--mnchen-3ya.de that can be displayed as www.münchen.de. This technology can be used to perform phishing attacks with legitimate looking link to the website (protected by the SSL certificate) when using encoded letters identical as the ASCII characters. An example of such phishing site is the demonstration of www.epic.com site impersonated by www.xn--e1awd7f.com.
+1.19.7 Hide the pane in the Add-ons dialog
+Default:	Not Configured.
+Required setting: 	extensions.getAddons.showPane: false
+Rationale:	This setting controls the Add-ons dialog. Since installation of Add-ons from websites should be disables this dialog should be hidden.
+1.19.8 Disable geolocation 
+Default:	Not Configured.
+Required setting: 	geo.enabled: false
+Rationale:	This setting controls the geolocation API.
+1.20 SearchEngines
+1.20.1 PreventInstalls
+Default:	installs enabled.
+Required setting: 	SearchEngines": {"PreventInstalls": true}
+Rationale:	Firefox embedded Search engines will effectively send data to the installed search engines when a request, not corresponding to an actual URL, is typed in the URL field. Therefore, Search Engines must be centrally managed and maintained by the system administrators.
+1.21 EnableTrackingProtection
+1.21.1 Value
+Default:                         true.
+Required setting:          "EnableTrackingProtection": {"Value": true, “Locked”:true}
+Rationale:                     Enhanced tracking protection provides an extra layer of security to                             block third-party trackers.
+1.21.2 Cryptomining                   
+Default:                           enabled.
+Required setting:            "EnableTrackingProtection": {"Cryptomining": true, “Locked”:true}
+Rationale:                    Cryptomining scripts are an inherent risk with browsing. Enabling this policy provides an extra layer of security.
+1.21.3 Fingerprinting
+Default:                              enabled.
+Required setting:               "EnableTrackingProtection": {"Fingerprinting": true, “Locked”:true}
+Rationale:                      Scripts that use fingerprinting represent a security risk. Enabling this policy blocks fingerprinting scripts.
+1.21.4 Do not allow tracking protection preferences to be changed
+Default:                             Not configured.
+Required setting:              "EnableTrackingProtection": {"Locked": true}
+Rationale:                        This policy prevents user changes, which would be a security risk. 
+
